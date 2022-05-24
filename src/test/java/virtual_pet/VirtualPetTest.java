@@ -3,34 +3,43 @@ package virtual_pet;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VirtualPetTest {
 
     @Test
     public void feedShouldReduceHunger(){
         VirtualPet underTest = new VirtualPet("test", 5,5,5);
+        int initial = underTest.getHungerLevel();
         underTest.feed();
-        assertEquals(underTest.getHungerLevel(), 3);
+        assertTrue(underTest.getHungerLevel() < initial);
     }
     @Test
     public void waterShouldReduceThirst(){
         VirtualPet underTest = new VirtualPet("test", 5,5,5);
+        int initial = underTest.getThirstLevel();
         underTest.water();
-        assertEquals(underTest.getThirstLevel(), 3);
+        assertTrue(underTest.getThirstLevel() < initial);
     }
     @Test
     public void playShouldReduceBoredom(){
         VirtualPet underTest = new VirtualPet("test", 5,5,5);
+        int initial = underTest.getBoredomLevel();
         underTest.play();
-        assertEquals(underTest.getBoredomLevel(), 3);
+        assertTrue(underTest.getBoredomLevel() < initial);
     }
     @Test
     public void tickShouldIncreaseAllLevels(){
         VirtualPet underTest = new VirtualPet("test", 5,5,5);
+        int initialBoredom = underTest.getBoredomLevel();
+        int initialThirst = underTest.getThirstLevel();
+        int initialHunger = underTest.getHungerLevel();
         underTest.tick();
-        assertEquals(underTest.getBoredomLevel(), 6);
-        assertEquals(underTest.getThirstLevel(), 6);
-        assertEquals(underTest.getHungerLevel(), 6);
+        assertTrue(underTest.getBoredomLevel() > initialBoredom);
+        assertTrue(underTest.getThirstLevel() > initialThirst);
+        assertTrue(underTest.getHungerLevel() > initialHunger);
+
+
     }
 
 }
