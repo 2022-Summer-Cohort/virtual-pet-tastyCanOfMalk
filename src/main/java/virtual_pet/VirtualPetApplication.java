@@ -16,6 +16,9 @@ public class VirtualPetApplication {
 
         String input = reader.nextLine().toLowerCase();
 
+        if(spot.getRunAwayStatus()){
+            break;
+        }
         if(input.equals("q")){
             break;
         } else if (input.equals("?")) {
@@ -36,9 +39,6 @@ public class VirtualPetApplication {
         }
 
     }
-
-        System.out.println("bye!");
-
 
 
     }
