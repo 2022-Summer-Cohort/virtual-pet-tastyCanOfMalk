@@ -1,5 +1,4 @@
 package virtual_pet;
-
 import java.util.Scanner;
 
 public class VirtualPetApplication {
@@ -7,40 +6,43 @@ public class VirtualPetApplication {
     public static void main(String[] args) {
         Scanner reader = new Scanner(System.in);
 
-        VirtualPet Paco  = new VirtualPet("Paco", 1, "Alpaca", "Pacapaca", 5);
-        VirtualPet Teddy = new VirtualPet("Teddy", 1, "Bear", "Roaaar!", 3);
-        VirtualPet Sonic = new VirtualPet("Sonic", 1, "Hedgehog", "Meow?", 10);
+        VirtualPet spot = new VirtualPet("Spot", 1, 1, 8);
 
-        String selection;
+        System.out.println("Type 'q' to quit");
+        System.out.println("Type '?' for commands");
+        System.out.println("Commands: (f)eed, (p)lay, (w)ater, (s)tatus");
+        System.out.println("---");
+    while(true){
 
-        Paco.introduce();
+        String input = reader.nextLine().toLowerCase();
 
-        while(true){
-            Paco.petStatus();
-
-            System.out.println("What do you want to do (pet, play, clean, wait, or quit)?");
-            selection = reader.nextLine().toLowerCase();
-
-            if(selection.equals("pet")){
-                Paco.pet();
-            } else if (selection.equals("play")){
-                Paco.play();
-            } else if (selection.equals("wait")){
-                Paco.tick();
-            } else if (selection.equals("clean")){
-                Paco.cleanPoop();
-            } else if (selection.equals("quit")){
-                break;
-            } else {
-                System.out.println("Invalid, try again");
-            }
+        if(input.equals("q")){
+            break;
+        } else if (input.equals("?")) {
+            System.out.println("Commands: (f)eed, (p)lay, (w)ater, (s)tatus");
+        } else if (input.equals("f")) {
+            spot.feed();
+            spot.tick();
+        } else if (input.equals("p")) {
+            spot.play();
+            spot.tick();
+        } else if (input.equals("w")) {
+            spot.water();
+            spot.tick();
+        } else if (input.equals("s")) {
+            spot.status();
+        } else {
+            System.out.println("Invalid command");
         }
 
+    }
+
+        System.out.println("bye!");
 
 
-        }
 
-
+    }
 
 }
+
 
