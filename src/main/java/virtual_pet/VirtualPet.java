@@ -7,11 +7,10 @@ import java.util.concurrent.TimeUnit;
 public class VirtualPet {
     Random rand = new Random();
     String name, type;
-    int age, hungerLevel, thirstLevel, boredomLevel;
+    int age, maxAge, hungerLevel, thirstLevel, boredomLevel;
+    boolean isBored, isHungry, isThirsty, justPlayed, wantsToEscape = false;
     boolean isAlive = true;
-    boolean isBored, isHungry, isThirsty, justPlayed = false;
     int hungerCounter, thirstCounter, boredomCounter = 0;
-
     //        https://cutekaomoji.com/animals/
     ArrayList<String> petFacesNeutral = new ArrayList<>(Arrays.asList("-_-", "(-_-)", "(￣__￣)", "(¯_¯)"));
     ArrayList<String> petFacesTired = new ArrayList<>(Arrays.asList("(¯﹃¯)", " ( v¯﹃¯v  )", " (¯﹃¯  )"));
@@ -25,12 +24,16 @@ public class VirtualPet {
         this.hungerLevel = hungerLevel;
         this.thirstLevel = thirstLevel;
         this.boredomLevel = boredomLevel;
+        this.maxAge = this.age + 20;
     }
 
     // GETTERS
     public String getName() { return this.name; }
     public String getType() { return this.type; }
     public int getAge() { return this.age; }
+    public int getMaxAge() { return this.maxAge; }
+    public boolean getAlive(){ return this.isAlive; }
+    public boolean getWantsToEscape() {return this.wantsToEscape; }
     public int getHungerLevel()  { return this.hungerLevel; }
     public int getThirstLevel()  { return this.thirstLevel; }
     public int getBoredomLevel() { return this.boredomLevel; }
@@ -93,6 +96,7 @@ public class VirtualPet {
         if(boredomLevel >= 100){
             boredomLevel = 100;
             isBored = true;
+            boredomCounter++;
         } else if (boredomLevel <= 0){
             boredomLevel = 0;
             isBored = false;
@@ -102,6 +106,7 @@ public class VirtualPet {
         if(thirstLevel >= 100){
             thirstLevel = 100;
             isThirsty = true;
+            thirstCounter++;
         } else if (thirstLevel <= 0){
             thirstLevel = 0;
             isThirsty = false;
@@ -111,6 +116,7 @@ public class VirtualPet {
         if(hungerLevel >= 100){
             hungerLevel = 100;
             isHungry = true;
+            hungerCounter++;
         } else if (hungerLevel <= 0){
             hungerLevel = 0;
             isHungry = false;
@@ -143,6 +149,22 @@ public class VirtualPet {
             System.out.println(petFacesNeutral.get(rand.nextInt(petFacesNeutral.size())));
         }
         System.out.println("");
+    }
+
+    public void checkEndGame() {
+        if (thirstCounter + hungerCounter > 10 || age > maxAge) {
+            isAlive = false;
+        }
+        if (boredomCounter > 10){
+            wantsToEscape = true;
+        }
+    }
+
+    public void increaseAge(){
+        // increase age by zero or 1;
+        int n = rand.nextInt(10);
+        if(n <= 3){ this.age++;}
+
     }
 
 
