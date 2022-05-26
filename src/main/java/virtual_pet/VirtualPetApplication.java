@@ -39,6 +39,7 @@ public class VirtualPetApplication {
         randomThirst  = rand.nextInt(50);
         randomBoredom = rand.nextInt(80);
 
+//        for testing
 //        petName = "Paco";
 //        petType = "Taco";
 //        petAge = "22";
