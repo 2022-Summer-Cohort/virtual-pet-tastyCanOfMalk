@@ -17,31 +17,31 @@ public class VirtualPetApplication {
 
         // PET CREATION
         String petName, petType, petAge;
-//        System.out.println("Welcome to VirtualPet!");
-//        System.out.println("");
-//        System.out.println("Name your pet!");
-//        petName = reader.nextLine();
-//        System.out.println("What type of animal is it?");
-//        petType = reader.nextLine();
-//        while(true){
-//            System.out.println("How old is it?");
-//            petAge = reader.nextLine();
-//            try{
-//                Integer.parseInt(petAge);
-//                break;
-//            } catch (NumberFormatException e){
-//                System.out.println("Not a number!");
-//            }
-//        }
-//
+        System.out.println("Welcome to VirtualPet!");
+        System.out.println("");
+        System.out.println("Name your pet!");
+        petName = reader.nextLine();
+        System.out.println("What type of animal is it?");
+        petType = reader.nextLine();
+        while(true){
+            System.out.println("How old is it?");
+            petAge = reader.nextLine();
+            try{
+                Integer.parseInt(petAge);
+                break;
+            } catch (NumberFormatException e){
+                System.out.println("Not a number!");
+            }
+        }
+
         int randomHunger, randomThirst, randomBoredom;
         randomHunger  = rand.nextInt(20);
         randomThirst  = rand.nextInt(50);
         randomBoredom = rand.nextInt(80);
 
-        petName = "Paco";
-        petType = "Taco";
-        petAge = "22";
+//        petName = "Paco";
+//        petType = "Taco";
+//        petAge = "22";
 
         VirtualPet userPet = new VirtualPet(petName, petType, Integer.parseInt(petAge), randomHunger, randomThirst, randomBoredom);
 
@@ -52,23 +52,23 @@ public class VirtualPetApplication {
 
             userPet.checkEndGame();
             if(!userPet.getAlive() && userPet.getAge() < userPet.getMaxAge()){
-                System.out.println("OMG! You killed " + petName + "!");
+                System.out.println("OMG! You killed " + petName + "!   (✖╭╮✖) ");
                 TimeUnit.SECONDS.sleep(3);
                 break petLoop;
             } else if (!userPet.getAlive()){
-                System.out.println(petName + " died of old age .. ╥_╥  ");
+                System.out.println(petName + " died of old age ..   ╥_╥  ");
                 TimeUnit.SECONDS.sleep(3);
                 break petLoop;
             }
             if(userPet.getWantsToEscape()){
-                System.out.println(petName + " got bored and escaped!");
+                System.out.println(petName + " got bored and escaped!   ヽ(￣д￣;)ノ ");
                 TimeUnit.SECONDS.sleep(3);
                 break petLoop;
             }
 
             userPet.increaseAge();
             userPet.checkLevels();
-            userPet.petStatus();
+            userPet.printPetStatus();
             userPet.checkNeeds();
 
             userMenu();
