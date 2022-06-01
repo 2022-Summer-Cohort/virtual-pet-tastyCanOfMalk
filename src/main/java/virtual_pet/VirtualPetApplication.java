@@ -1,8 +1,8 @@
 package virtual_pet;
+
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-import static java.lang.Thread.*;
 
 public class VirtualPetApplication {
 
@@ -13,7 +13,7 @@ public class VirtualPetApplication {
 
     public void gameLoop() throws InterruptedException {
         Scanner reader = new Scanner(System.in);
-        Random rand    = new Random();
+        Random rand = new Random();
 
         // PET CREATION
         String petName, petType, petAge;
@@ -23,45 +23,46 @@ public class VirtualPetApplication {
         petName = reader.nextLine();
         System.out.println("What type of animal is it?");
         petType = reader.nextLine();
-        while(true){
+        while (true) {
             System.out.println("How old is it?");
             petAge = reader.nextLine();
-            try{
+            try {
                 Integer.parseInt(petAge);
                 break;
-            } catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println("Not a number!");
             }
         }
 
         int randomHunger, randomThirst, randomBoredom;
-        randomHunger  = rand.nextInt(20);
-        randomThirst  = rand.nextInt(50);
+        randomHunger = rand.nextInt(20);
+        randomThirst = rand.nextInt(50);
         randomBoredom = rand.nextInt(80);
 
-//        for testing
-//        petName = "Paco";
-//        petType = "Taco";
-//        petAge = "22";
+        // for testing
+        // petName = "Paco";
+        // petType = "Taco";
+        // petAge = "22";
 
-        VirtualPet userPet = new VirtualPet(petName, petType, Integer.parseInt(petAge), randomHunger, randomThirst, randomBoredom);
+        VirtualPet userPet = new VirtualPet(petName, petType, Integer.parseInt(petAge), randomHunger, randomThirst,
+                randomBoredom);
 
         // BEGIN PET LOOP
-        petLoop: while(true){
+        petLoop: while (true) {
 
             TimeUnit.SECONDS.sleep(0);
 
             userPet.checkEndGame();
-            if(!userPet.getAlive() && userPet.getAge() < userPet.getMaxAge()){
+            if (!userPet.getAlive() && userPet.getAge() < userPet.getMaxAge()) {
                 System.out.println("OMG! You killed " + petName + "!   (✖╭╮✖) ");
                 TimeUnit.SECONDS.sleep(3);
                 break petLoop;
-            } else if (!userPet.getAlive()){
+            } else if (!userPet.getAlive()) {
                 System.out.println(petName + " died of old age ..   ╥_╥  ");
                 TimeUnit.SECONDS.sleep(3);
                 break petLoop;
             }
-            if(userPet.getWantsToEscape()){
+            if (userPet.getWantsToEscape()) {
                 System.out.println(petName + " got bored and escaped!   ヽ(￣д￣;)ノ ");
                 TimeUnit.SECONDS.sleep(3);
                 break petLoop;
@@ -77,12 +78,12 @@ public class VirtualPetApplication {
             String userInput;
 
             // check if input is int
-            while(true){
+            while (true) {
                 userInput = reader.nextLine();
-                try{
+                try {
                     Integer.parseInt(userInput);
                     break;
-                } catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     System.out.println("Not a number!");
                     TimeUnit.SECONDS.sleep(1);
                     userMenu();
@@ -90,7 +91,7 @@ public class VirtualPetApplication {
             }
 
             // process user input
-            switch(Integer.parseInt(userInput)){
+            switch (Integer.parseInt(userInput)) {
                 case 1:
                     userPet.feedPet();
                     userPet.tick(1);
@@ -117,7 +118,7 @@ public class VirtualPetApplication {
         }
     }
 
-    public void userMenu(){
+    public void userMenu() {
         System.out.println("1. Feed your pet");
         System.out.println("2. Water your pet");
         System.out.println("3. Play with your pet");
@@ -126,5 +127,3 @@ public class VirtualPetApplication {
     }
 
 }
-
-
