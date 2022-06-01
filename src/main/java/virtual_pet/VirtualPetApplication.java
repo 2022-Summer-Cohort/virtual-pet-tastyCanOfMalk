@@ -9,6 +9,7 @@ public class VirtualPetApplication {
     public static void main(String[] args) throws InterruptedException {
         VirtualPetApplication myGame = new VirtualPetApplication();
         myGame.gameLoop();
+
     }
 
     public void gameLoop() throws InterruptedException {
@@ -68,8 +69,8 @@ public class VirtualPetApplication {
                 break petLoop;
             }
 
-            userPet.increaseAge();
-            userPet.checkLevels();
+//            userPet.increaseAge();
+//            userPet.checkLevels();
             userPet.printPetStatus();
             userPet.checkNeeds();
 

@@ -56,10 +56,23 @@ public class VirtualPet {
 
     public void tick(int n){
         // increase levels by rand(n)
-        increaseBoredomLevel(rand.nextInt(n)+5);
-        increaseHungerLevel (rand.nextInt(n)+2);
+        increaseBoredomLevel(rand.nextInt(n)+3);
+        increaseHungerLevel (rand.nextInt(n)+1);
         increaseThirstLevel (rand.nextInt(n)+2);
+        this.increaseAge();
+        this.checkLevels();
+        this.checkNeeds();
     }
+    public void tick(){
+        // increase levels by 1
+        increaseBoredomLevel(rand.nextInt()+3);
+        increaseHungerLevel (rand.nextInt()+1);
+        increaseThirstLevel (rand.nextInt()+2);
+        this.increaseAge();
+        this.checkLevels();
+        this.checkNeeds();
+    }
+
     public void feedPet() throws InterruptedException {
         // decrease hunger, increase thirst
         if(this.hungerLevel >  0){
@@ -167,6 +180,8 @@ public class VirtualPet {
 
     }
 
-
-
+    @Override
+    public String toString() {
+        return this.name + ", the " + this.age + " year-old " + this.type;
+    }
 }
