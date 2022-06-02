@@ -68,15 +68,60 @@ public class VirtualPetShelter {
     public void getThirstLevel(VirtualPet pet){  System.out.println(" Thirst: " + pet.getThirstLevel()); }
     public void getHungerLevel(VirtualPet pet){  System.out.println(" Hunger: " + pet.getHungerLevel()); }
     public void getStatus(){
+        System.out.println(" vvvvvvvvvvvvvvvvvvvvvvvvvv ");
         System.out.println(" ------- Shelter status vvv ");
-        for(VirtualPet pet : pets){
-            pet.printPetStatus();
+        if(pets.size() == 1){
+            for(VirtualPet pet : pets){
+                pet.printPetStatus();
+            }
+        } else {
+            // get max name length of pet names for spacing
+            int maxNameLength = 0;
+            for(VirtualPet pet : pets){
+                String placeHolder = pet.getName() + " the " + pet.getAge() + " year-old " + pet.getType();
+                if(placeHolder.length() > maxNameLength){ maxNameLength = placeHolder.length() ;}
+//                if( pet.getName().length() > maxNameLength) { maxNameLength = pet.getName().length(); }
+            }
+
+            System.out.println(maxNameLength); //test
+
+            // create top legend (8 char spaces total)
+            String topLegend = "";
+            for(int i = 0; i < maxNameLength; i++){
+                topLegend += " ";
+            }
+            topLegend += "| Hunger | Thirst | Boredom | Status ";
+            System.out.println(topLegend);
+
+            // Construct name with padded spaces for each pet
+            for(VirtualPet pet : pets){
+                // pad the names
+//                String paddedString = pet.getName();
+                String placeHolder = pet.getName() + " the " + pet.getAge() + " year-old " + pet.getType();
+                String paddedString = pet.getName() + " the " + pet.getAge() + " year-old " + pet.getType();
+                if(pet.getName().length() < maxNameLength){
+                    for(int i = 0; i < maxNameLength - placeHolder.length(); i++){
+                        paddedString += " ";
+                    }
+                }
+                // add status values and padding for each pet
+                paddedString += "| " + pet.getHungerLevel();
+                while(paddedString.length() < maxNameLength + 9){ paddedString += " " ;}
+                paddedString += "| " + pet.getThirstLevel();
+                while(paddedString.length() < maxNameLength + 18){ paddedString += " " ;}
+                paddedString += "| " + pet.getBoredomLevel();
+                while(paddedString.length() < maxNameLength + 28){ paddedString += " " ;}
+                paddedString += "| " + pet.getStatusEmoji();
+                System.out.println(paddedString);
+
+            }
+            // line break after all status
+            System.out.println(" ------------ ");
         }
-        System.out.println("");
     }
     public void getHungerLevel(){
         if(this.pets.size() > 0 ) {
-            System.out.println("Hunger: ");
+            System.out.println("Hunger ");
             for(VirtualPet pet : pets){
                 System.out.println(pet.getName() + ": " + pet.getHungerLevel());
             }

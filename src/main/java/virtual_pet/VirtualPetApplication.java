@@ -47,11 +47,20 @@ public class VirtualPetApplication {
         myShelter.addPet(petC);
         // end testing
 
+        /*
+        prompt for action
+            perform action
+
+        */
+
+
+
         System.out.println("------------------------------------------");
         System.out.println("////   Welcome to the pet shelter!    ////");
         System.out.println("------------------------------------------");
 
         shelterLoop: while(true){
+
             myShelter.getStatus();
             this.shelterMenu();
 

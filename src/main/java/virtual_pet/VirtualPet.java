@@ -12,7 +12,7 @@ public class VirtualPet {
     boolean isAlive = true;
     int hungerCounter, thirstCounter, boredomCounter = 0;
 
-    //        https://cutekaomoji.com/animals/
+    // https://cutekaomoji.com
     ArrayList<String> petFacesNeutral = new ArrayList<>(Arrays.asList("-_-", "(-_-)", "(￣__￣)", "(¯_¯)", "(´･_･`)", "(・_・ヾ"));
     ArrayList<String> petFacesTired = new ArrayList<>(Arrays.asList("(¯﹃¯)", " ( v¯﹃¯v  )", " (¯﹃¯  )"));
     ArrayList<String> petFacesNeedy = new ArrayList<>(Arrays.asList("(-‸-)", "(⇀‸↼‶)", " (‾̀ _ ‾̀ )", "╥_╥", "ㄒ_ㄒ", " ┰_┰" ));
@@ -25,16 +25,28 @@ public class VirtualPet {
         this.hungerLevel = hungerLevel;
         this.thirstLevel = thirstLevel;
         this.boredomLevel = boredomLevel;
-        this.maxAge = this.age + 10;
+        this.maxAge = this.age + 20;
     }
 
     // GETTERS
     public String getName() { return this.name; }
     public String getType() { return this.type; }
     public int getAge() { return this.age; }
-    public int getHungerLevel()  { return this.hungerLevel; }
-    public int getThirstLevel()  { return this.thirstLevel; }
-    public int getBoredomLevel() { return this.boredomLevel; }
+    public int getHungerLevel()  {
+        if(isAlive || !wantsToEscape){
+            return this.hungerLevel;
+        } else { return 0; }
+    }
+    public int getThirstLevel()  {
+        if(isAlive || !wantsToEscape){
+            return this.thirstLevel;
+        } else { return 0; }
+    }
+    public int getBoredomLevel() {
+        if(isAlive || !wantsToEscape){
+            return this.boredomLevel;
+        } else { return 0; }
+    }
 
     // INCREASE/DECREASE VALUES
     public void increaseBoredomLevel(int n) { this.boredomLevel += n; }
@@ -64,17 +76,17 @@ public class VirtualPet {
     // TICKS
     public void tick(int n){
         // increase levels by rand(n)
-        increaseBoredomLevel(rand.nextInt(n)+3);
-        increaseHungerLevel (rand.nextInt(n)+1);
-        increaseThirstLevel (rand.nextInt(n)+2);
+        increaseBoredomLevel(rand.nextInt(n));
+        increaseHungerLevel (rand.nextInt(n));
+        increaseThirstLevel (rand.nextInt(n));
         this.checkEndGame();
         this.increaseAge();
         this.checkLevels();
     }
     public void tick(){
-        increaseBoredomLevel(rand.nextInt()+3);
-        increaseHungerLevel (rand.nextInt()+1);
-        increaseThirstLevel (rand.nextInt()+2);
+        increaseBoredomLevel(3);
+        increaseHungerLevel (1);
+        increaseThirstLevel (2);
         this.checkEndGame();
         this.increaseAge();
         this.checkLevels();
@@ -138,6 +150,16 @@ public class VirtualPet {
             }
         }
     }
+    public String getStatusEmoji(){
+        if(!isAlive)           { return "(×_×)       dead :(" ;}
+        else if(wantsToEscape) { return "┗( ＾0＾)┓   ran away!" ;}
+        else if(isHungry || isThirsty || isBored) { return petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())) ;}
+        else if(thirstLevel <= 70 && hungerLevel <= 70 && boredomLevel <= 70) {return petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())) ;}
+        else if(justPlayed) {return petFacesTired.get(rand.nextInt(petFacesTired.size())) ;}
+        else { return petFacesNeutral.get(rand.nextInt(petFacesNeutral.size())) ;}
+    }
+
+
     public void increaseAge(){
         // increase age by zero or 1;
         int n = rand.nextInt(10);
@@ -151,7 +173,6 @@ public class VirtualPet {
         if(this.hungerLevel >  0){
             this.decreaseHungerLevel(rand.nextInt(10)+3);
             this.increaseThirstLevel(rand.nextInt(3));
-            this.checkLevels();
         } else {
             System.out.println(" << " + this.name + " isn't hungry! >> ");
             TimeUnit.SECONDS.sleep(1);
@@ -162,7 +183,6 @@ public class VirtualPet {
         if(this.thirstLevel > 0){
             this.decreaseThirstLevel(rand.nextInt(10)+3);
             this.increaseBoredomLevel(rand.nextInt(3));
-            this.checkLevels();
         } else {
             System.out.println(" << " + this.name + " isn't thirsty! >> ");
             TimeUnit.SECONDS.sleep(1);
@@ -176,7 +196,6 @@ public class VirtualPet {
             this.decreaseBoredomLevel(rand.nextInt(10)+5);
             this.increaseThirstLevel(rand.nextInt(8)+1);
             this.increaseHungerLevel(rand.nextInt(5)+1);
-            this.checkLevels();
             this.justPlayed = true;
         }
 
@@ -184,10 +203,10 @@ public class VirtualPet {
 
     //
     public void checkEndGame() {
-        if (thirstCounter + hungerCounter > 5 || age > maxAge) {
+        if (thirstCounter + hungerCounter > 10 || age > maxAge) {
             isAlive = false;
         }
-        if (boredomCounter > 5){
+        if (boredomCounter > 15){
             wantsToEscape = true;
         }
     }
