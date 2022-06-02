@@ -25,16 +25,13 @@ public class VirtualPet {
         this.hungerLevel = hungerLevel;
         this.thirstLevel = thirstLevel;
         this.boredomLevel = boredomLevel;
-        this.maxAge = this.age + 20;
+        this.maxAge = this.age + 10;
     }
 
     // GETTERS
     public String getName() { return this.name; }
     public String getType() { return this.type; }
     public int getAge() { return this.age; }
-    public int getMaxAge() { return this.maxAge; }
-    public boolean getAlive(){ return this.isAlive; }
-    public boolean getWantsToEscape() {return this.wantsToEscape; }
     public int getHungerLevel()  { return this.hungerLevel; }
     public int getThirstLevel()  { return this.thirstLevel; }
     public int getBoredomLevel() { return this.boredomLevel; }
@@ -48,11 +45,20 @@ public class VirtualPet {
     public void decreaseHungerLevel(int n)  { this.hungerLevel  -= n; }
 
     public void printPetStatus(){
-        System.out.println(" ------- ");
-        System.out.println("<" + this.name + " the " + this.age + " year-old " + this.type + ">");
-        System.out.println(" Hunger: " + this.getHungerLevel());
-        System.out.println(" Thirst: " + this.getThirstLevel());
-        System.out.println("Boredom: " + this.getBoredomLevel());
+        if(isAlive){
+            System.out.println(" ------------------------------- ");
+            System.out.println("<" + this.name + " the " + this.age + " year-old " + this.type + ">");
+            System.out.println(" Hunger: " + this.getHungerLevel());
+            System.out.println(" Thirst: " + this.getThirstLevel());
+            System.out.println("Boredom: " + this.getBoredomLevel());
+            checkNeeds();
+        } else if(!isAlive){
+            System.out.println(this.name + " died  (×_×) ");
+            System.out.println(" ------------------------------- ");
+        } else if (wantsToEscape) {
+            System.out.println(this.name + " ran away!  ヽ(•‿•)ノ ");
+            System.out.println(" ------------------------------- ");
+        }
     }
 
     // TICKS
@@ -61,17 +67,17 @@ public class VirtualPet {
         increaseBoredomLevel(rand.nextInt(n)+3);
         increaseHungerLevel (rand.nextInt(n)+1);
         increaseThirstLevel (rand.nextInt(n)+2);
+        this.checkEndGame();
         this.increaseAge();
         this.checkLevels();
-        this.checkNeeds();
     }
     public void tick(){
         increaseBoredomLevel(rand.nextInt()+3);
         increaseHungerLevel (rand.nextInt()+1);
         increaseThirstLevel (rand.nextInt()+2);
+        this.checkEndGame();
         this.increaseAge();
         this.checkLevels();
-        this.checkNeeds();
     }
     public void checkLevels(){
         if(boredomLevel >= 100){
@@ -106,30 +112,31 @@ public class VirtualPet {
         }
     }
     public void checkNeeds(){
-        if( (!isHungry && !isThirsty && !isBored) && (thirstLevel >= 90 || hungerLevel >= 90 || boredomLevel >= 90) ){
-            System.out.println(" -- << " + this.name + " needs attention! > -- ");
-            System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
-        } else if(isHungry) {
-            System.out.println(" << " + this.name + " is hungry.. Feed them! >> ");
-            System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
-        } else if(isThirsty){
-            System.out.println(" << " + this.name + " is thirsty.. Water them! >> ");
-            System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
-        } else if(isBored)  {
-            System.out.println(" << " + this.name + " is bored.. Play with them! >> ");
-            System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
-        } else if(justPlayed) {
-            System.out.println(" -- ");
-            System.out.println(petFacesTired.get(rand.nextInt(petFacesTired.size())));
-            this.justPlayed = false;
-        } else if(thirstLevel <= 50 && hungerLevel <= 50 && boredomLevel <= 50){
-            System.out.println(" -- ");
-            System.out.println(petFacesHappy.get(rand.nextInt(petFacesHappy.size())));
-        } else {
-            System.out.print(" -- ");
-            System.out.println(petFacesNeutral.get(rand.nextInt(petFacesNeutral.size())));
+        if(isAlive && !wantsToEscape){
+            if( (!isHungry && !isThirsty && !isBored) && (thirstLevel >= 90 || hungerLevel >= 90 || boredomLevel >= 90) ){
+                System.out.println(" -- << " + this.name + " needs attention! > -- ");
+                System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
+            } else if(isHungry) {
+                System.out.println(" << " + this.name + " is hungry.. Feed them! >> ");
+                System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
+            } else if(isThirsty){
+                System.out.println(" << " + this.name + " is thirsty.. Water them! >> ");
+                System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
+            } else if(isBored)  {
+                System.out.println(" << " + this.name + " is bored.. Play with them! >> ");
+                System.out.println(petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())));
+            } else if(justPlayed) {
+                System.out.println(" -- ");
+                System.out.println(petFacesTired.get(rand.nextInt(petFacesTired.size())));
+                this.justPlayed = false;
+            } else if(thirstLevel <= 50 && hungerLevel <= 50 && boredomLevel <= 50){
+                System.out.println(" -- ");
+                System.out.println(petFacesHappy.get(rand.nextInt(petFacesHappy.size())));
+            } else {
+                System.out.print(" -- ");
+                System.out.println(petFacesNeutral.get(rand.nextInt(petFacesNeutral.size())));
+            }
         }
-        System.out.println("");
     }
     public void increaseAge(){
         // increase age by zero or 1;
@@ -177,13 +184,14 @@ public class VirtualPet {
 
     //
     public void checkEndGame() {
-        if (thirstCounter + hungerCounter > 10 || age > maxAge) {
+        if (thirstCounter + hungerCounter > 5 || age > maxAge) {
             isAlive = false;
         }
-        if (boredomCounter > 10){
+        if (boredomCounter > 5){
             wantsToEscape = true;
         }
     }
+
 
     @Override
     public String toString() {
