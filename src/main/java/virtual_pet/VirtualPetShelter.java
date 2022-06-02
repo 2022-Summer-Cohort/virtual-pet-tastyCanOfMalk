@@ -8,70 +8,102 @@ public class VirtualPetShelter {
     public VirtualPetShelter() {
     }
 
+    // MODIFY PETS
     public void addPet(VirtualPet pet){
         this.pets.add(pet);
     }
+    public void adoptPet(String petName){ pets.removeIf(n -> (n.getName().equals(petName))); }
 
-    public void listPetsInShelter(){
-        System.out.println("There are a total of " + pets.size() + " pets in the shelter: ");
-        for(VirtualPet pet : this.pets){
-            System.out.println(pet);
-        }
-    }
-
-    public String getName(VirtualPet pet){
-        return pet.getName();
-    }
-    public String getName() {
-        String petNames = "Names of pets in the shelter: ";
-        for (VirtualPet pet : this.pets) {
-            petNames += pet.getName() + ", ";
-        }
-        return petNames.substring(0, petNames.length() - 2);
-    }
-
+    // GET PET DETAILS
+    public String getName(VirtualPet pet) { return pet.getName(); }
     public String getType(VirtualPet pet){
         return pet.getType();
     }
-    public String getType() {
-        String petTypes = "Types of pets in the shelter: ";
-        for (VirtualPet pet : this.pets) {
-            petTypes += pet.getType() + ", ";
-        }
-        return petTypes.substring(0, petTypes.length() - 2);
-    }
-
     public Integer getAge(VirtualPet pet){
         return pet.getAge();
     }
-    public String getAge() {
-        String petAges = "Ages of pets in the shelter: ";
-        for (VirtualPet pet : this.pets) {
-            petAges += Integer.toString(pet.getAge()) + ", ";
+    public String getName() {
+        String toReturn = "";
+        if(this.pets.size() > 0){
+            toReturn += "Names of pets in the shelter: ";
+            for (VirtualPet pet : this.pets) {
+                toReturn += pet.getName() + ", ";
+            }
+            return toReturn.substring(0, toReturn.length() - 2);
+        } else {
+            toReturn += "No pets here!";
         }
-        return petAges.substring(0, petAges.length() - 2);
+        return toReturn;
+    }
+    public String getType() {
+        String toReturn = "";
+        if(this.pets.size() > 0){
+            toReturn += "Types of pets in the shelter: ";
+            for (VirtualPet pet : this.pets) {
+                toReturn += pet.getType() + ", ";
+            }
+            return toReturn.substring(0, toReturn.length() - 2);
+        } else {
+            toReturn += "No pets here!";
+        }
+        return toReturn;
+    }
+    public String getAge() {
+        String toReturn = "";
+        if(this.pets.size() > 0){
+            toReturn += "Ages of pets in the shelter: ";
+            for (VirtualPet pet : this.pets) {
+                toReturn += pet.getAge() + ", ";
+            }
+            return toReturn.substring(0, toReturn.length() - 2);
+        } else {
+            toReturn += "No pets here!";
+        }
+        return toReturn;
+    }
+
+    // GET PET STATS
+    public void getStatus(VirtualPet pet){ pet.printPetStatus(); }
+    public void getBoredomLevel(VirtualPet pet){ System.out.println("Boredom: " + pet.getBoredomLevel()); }
+    public void getThirstLevel(VirtualPet pet){  System.out.println(" Thirst: " + pet.getThirstLevel()); }
+    public void getHungerLevel(VirtualPet pet){  System.out.println(" Hunger: " + pet.getHungerLevel()); }
+    public void getStatus(){
+        System.out.println(" ------- Shelter status vvv ");
+        for(VirtualPet pet : pets){
+            pet.printPetStatus();
+        }
+        System.out.println("");
     }
     public void getHungerLevel(){
-        System.out.println("Hunger: ");
-        for(VirtualPet pet : pets){
-            System.out.println(pet.getName() + ": " + pet.getHungerLevel());
+        if(this.pets.size() > 0 ) {
+            System.out.println("Hunger: ");
+            for(VirtualPet pet : pets){
+                System.out.println(pet.getName() + ": " + pet.getHungerLevel());
+            }
+        } else {
+            System.out.println("Not pets!");
         }
     }
     public void getThirstLevel(){
-        System.out.println("Thirst: ");
-        for(VirtualPet pet : pets){
-            System.out.println(pet.getName() + ": " + pet.getThirstLevel());
-        }
-    }
+        if(this.pets.size() > 0 ){
+            System.out.println("Thirst: ");
+            for(VirtualPet pet : pets){
+                System.out.println(pet.getName() + ": " + pet.getThirstLevel());
+            }
+        } else {
+            System.out.println("Not pets!");
+        }    }
     public void getBoredomLevel(){
-        System.out.println("Boredom: ");
-        for(VirtualPet pet : pets){
-            System.out.println(pet.getName() + ": " + pet.getBoredomLevel());
-        }
-    }
-    public void getBoredomLevel(VirtualPet pet){ System.out.println("Boredom: " + pet.getBoredomLevel()); }
-    public void getThirstLevel(VirtualPet pet){ System.out.println("Thirst: " + pet.getThirstLevel()); }
-    public void getHungerLevel(VirtualPet pet){ System.out.println("Hunger: " + pet.getHungerLevel()); }
+        if(this.pets.size() > 0 ) {
+            System.out.println("Boredom: ");
+            for(VirtualPet pet : pets){
+                System.out.println(pet.getName() + ": " + pet.getBoredomLevel());
+            }
+        } else {
+            System.out.println("Not pets!");
+        }    }
+
+    // GIVE PET ATTENTION
     public void feedPet() throws InterruptedException {
         for(VirtualPet pet : pets){
             pet.feedPet();
@@ -91,24 +123,25 @@ public class VirtualPetShelter {
     public void waterPet(VirtualPet pet) throws InterruptedException { pet.waterPet(); }
     public void playPet(VirtualPet pet) throws InterruptedException { pet.playPet(); }
 
-    public void printStatus(){
-        for(VirtualPet pet : pets){
-            pet.printPetStatus();
-        }
-    }
-
-    public void printStatus(VirtualPet pet){
-        pet.printPetStatus();
-    }
-
-    public void adoptPet(String petName){
-        pets.removeIf(n -> (n.getName().equals(petName)));
-    }
-
+    // TICKS
     public void tick(){
         for(VirtualPet pet : pets){
             pet.tick();
         }
     }
+    public void tick(int n){
+        for(VirtualPet pet : pets){
+            pet.tick(n);
+        }
+    }
 
+    @Override
+    public String toString() {
+        String newLine = System.getProperty("line.separator");//This will retrieve line separator dependent on OS.
+        String toReturn = "Pets in the shelter: " + newLine;
+        for(VirtualPet pet : pets){
+            toReturn += pet.getName() + ", the " + pet.getAge() + " year-old " + pet.getType() + newLine;
+        }
+        return toReturn;
+    }
 }

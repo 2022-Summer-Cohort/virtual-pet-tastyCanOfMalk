@@ -11,6 +11,7 @@ public class VirtualPet {
     boolean isBored, isHungry, isThirsty, justPlayed, wantsToEscape = false;
     boolean isAlive = true;
     int hungerCounter, thirstCounter, boredomCounter = 0;
+
     //        https://cutekaomoji.com/animals/
     ArrayList<String> petFacesNeutral = new ArrayList<>(Arrays.asList("-_-", "(-_-)", "(￣__￣)", "(¯_¯)", "(´･_･`)", "(・_・ヾ"));
     ArrayList<String> petFacesTired = new ArrayList<>(Arrays.asList("(¯﹃¯)", " ( v¯﹃¯v  )", " (¯﹃¯  )"));
@@ -47,13 +48,14 @@ public class VirtualPet {
     public void decreaseHungerLevel(int n)  { this.hungerLevel  -= n; }
 
     public void printPetStatus(){
-        System.out.println("<" + this.name + " the " + this.age + " year-old " + this.type + ">");
         System.out.println(" ------- ");
+        System.out.println("<" + this.name + " the " + this.age + " year-old " + this.type + ">");
         System.out.println(" Hunger: " + this.getHungerLevel());
         System.out.println(" Thirst: " + this.getThirstLevel());
         System.out.println("Boredom: " + this.getBoredomLevel());
     }
 
+    // TICKS
     public void tick(int n){
         // increase levels by rand(n)
         increaseBoredomLevel(rand.nextInt(n)+3);
@@ -64,46 +66,12 @@ public class VirtualPet {
         this.checkNeeds();
     }
     public void tick(){
-        // increase levels by 1
         increaseBoredomLevel(rand.nextInt()+3);
         increaseHungerLevel (rand.nextInt()+1);
         increaseThirstLevel (rand.nextInt()+2);
         this.increaseAge();
         this.checkLevels();
         this.checkNeeds();
-    }
-
-    public void feedPet() throws InterruptedException {
-        // decrease hunger, increase thirst
-        if(this.hungerLevel >  0){
-            this.decreaseHungerLevel(rand.nextInt(10)+3);
-            this.increaseThirstLevel(rand.nextInt(3));
-        } else {
-            System.out.println(" << " + this.name + " isn't hungry! >> ");
-            TimeUnit.SECONDS.sleep(1);
-        }
-    }
-    public void waterPet() throws InterruptedException {
-        // decrease thirst, increase boredom
-        if(this.thirstLevel > 0){
-            this.decreaseThirstLevel(rand.nextInt(10)+3);
-            this.increaseBoredomLevel(rand.nextInt(3));
-        } else {
-            System.out.println(" << " + this.name + " isn't thirsty! >> ");
-            TimeUnit.SECONDS.sleep(1);
-        }
-    }
-    public void playPet() throws InterruptedException {
-        if(isThirsty || isHungry){
-            System.out.println(" << " + this.name + " doesn't want to play! >> ");
-            TimeUnit.SECONDS.sleep(1);
-        } else {
-            this.decreaseBoredomLevel(rand.nextInt(10)+5);
-            this.increaseThirstLevel(rand.nextInt(8)+1);
-            this.increaseHungerLevel(rand.nextInt(5)+1);
-            this.justPlayed = true;
-        }
-
     }
     public void checkLevels(){
         if(boredomLevel >= 100){
@@ -163,7 +131,51 @@ public class VirtualPet {
         }
         System.out.println("");
     }
+    public void increaseAge(){
+        // increase age by zero or 1;
+        int n = rand.nextInt(10);
+        if(n <= 3){ this.age++;}
 
+    }
+
+    // GIVE PET ATTENTION
+    public void feedPet() throws InterruptedException {
+        // decrease hunger, increase thirst
+        if(this.hungerLevel >  0){
+            this.decreaseHungerLevel(rand.nextInt(10)+3);
+            this.increaseThirstLevel(rand.nextInt(3));
+            this.checkLevels();
+        } else {
+            System.out.println(" << " + this.name + " isn't hungry! >> ");
+            TimeUnit.SECONDS.sleep(1);
+        }
+    }
+    public void waterPet() throws InterruptedException {
+        // decrease thirst, increase boredom
+        if(this.thirstLevel > 0){
+            this.decreaseThirstLevel(rand.nextInt(10)+3);
+            this.increaseBoredomLevel(rand.nextInt(3));
+            this.checkLevels();
+        } else {
+            System.out.println(" << " + this.name + " isn't thirsty! >> ");
+            TimeUnit.SECONDS.sleep(1);
+        }
+    }
+    public void playPet() throws InterruptedException {
+        if(isThirsty || isHungry){
+            System.out.println(" << " + this.name + " doesn't want to play! >> ");
+            TimeUnit.SECONDS.sleep(1);
+        } else {
+            this.decreaseBoredomLevel(rand.nextInt(10)+5);
+            this.increaseThirstLevel(rand.nextInt(8)+1);
+            this.increaseHungerLevel(rand.nextInt(5)+1);
+            this.checkLevels();
+            this.justPlayed = true;
+        }
+
+    }
+
+    //
     public void checkEndGame() {
         if (thirstCounter + hungerCounter > 10 || age > maxAge) {
             isAlive = false;
@@ -171,13 +183,6 @@ public class VirtualPet {
         if (boredomCounter > 10){
             wantsToEscape = true;
         }
-    }
-
-    public void increaseAge(){
-        // increase age by zero or 1;
-        int n = rand.nextInt(10);
-        if(n <= 3){ this.age++;}
-
     }
 
     @Override
