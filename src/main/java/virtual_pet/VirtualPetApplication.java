@@ -9,27 +9,6 @@ public class VirtualPetApplication {
     public static void main(String[] args) throws InterruptedException {
         VirtualPetApplication myGame = new VirtualPetApplication();
         myGame.gameLoop();
-
-//        VirtualPet petA = new VirtualPet("Carrot", "Cat", 10, 0,0,10);
-//        VirtualPet petB = new VirtualPet("Squirtle", "Dog", 1, 100,10,10);
-//        VirtualPet petC = new VirtualPet("Pirate", "Bird", 100, 10,10,100);
-//        VirtualPetShelter myShelter = new VirtualPetShelter();
-//
-//        myShelter.addPet(petA);
-//        myShelter.addPet(petB);
-//        myShelter.addPet(petC);
-//
-//        myShelter.getStatus();
-//        myShelter.feedPet();
-//        myShelter.getStatus();
-//        myShelter.feedPet();
-//        myShelter.getStatus();
-//        myShelter.feedPet();
-//        myShelter.getStatus();
-
-
-//        System.out.println(myShelter);
-
     }
 
     public void gameLoop() throws InterruptedException {
@@ -105,14 +84,6 @@ public class VirtualPetApplication {
 
         }
 
-    }
-
-    public void userMenu() {
-        System.out.println("1. Feed your pet");
-        System.out.println("2. Water your pet");
-        System.out.println("3. Play with your pet");
-        System.out.println("4. Do nothing");
-        System.out.println("5. Quit game");
     }
 
     public void shelterMenu() {

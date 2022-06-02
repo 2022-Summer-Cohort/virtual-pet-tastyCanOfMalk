@@ -68,8 +68,8 @@ public class VirtualPetShelter {
     public void getThirstLevel(VirtualPet pet){  System.out.println(" Thirst: " + pet.getThirstLevel()); }
     public void getHungerLevel(VirtualPet pet){  System.out.println(" Hunger: " + pet.getHungerLevel()); }
     public void getStatus(){
-        System.out.println(" vvvvvvvvvvvvvvvvvvvvvvvvvv ");
-        System.out.println(" ------- Shelter status vvv ");
+        System.out.println(" ................................ ");
+        System.out.println(" .....    Shelter status    ..... ");
         if(pets.size() == 1){
             for(VirtualPet pet : pets){
                 pet.printPetStatus();

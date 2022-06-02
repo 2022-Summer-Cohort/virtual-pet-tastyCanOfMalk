@@ -211,7 +211,6 @@ public class VirtualPet {
         }
     }
 
-
     @Override
     public String toString() {
         return this.name + ", the " + this.age + " year-old " + this.type;
