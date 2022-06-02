@@ -154,7 +154,7 @@ public class VirtualPet {
         if(!isAlive)           { return "(×_×)       dead :(" ;}
         else if(wantsToEscape) { return "┗( ＾0＾)┓   ran away!" ;}
         else if(isHungry || isThirsty || isBored) { return petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())) ;}
-        else if(thirstLevel <= 70 && hungerLevel <= 70 && boredomLevel <= 70) {return petFacesNeedy.get(rand.nextInt(petFacesNeedy.size())) ;}
+        else if(thirstLevel <= 70 && hungerLevel <= 70 && boredomLevel <= 70) {return petFacesNeutral.get(rand.nextInt(petFacesNeutral.size())) ;}
         else if(justPlayed) {return petFacesTired.get(rand.nextInt(petFacesTired.size())) ;}
         else { return petFacesNeutral.get(rand.nextInt(petFacesNeutral.size())) ;}
     }

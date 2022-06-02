@@ -38,22 +38,14 @@ public class VirtualPetApplication {
         Random rand = new Random();
         String userSelection, petToAdopt;
 
-        // Testing
+        // Add starting pets
         VirtualPet petA = new VirtualPet("Carrot", "Cat", 10, 0,0,10);
         VirtualPet petB = new VirtualPet("Squirtle", "Dog", 1, 100,10,10);
         VirtualPet petC = new VirtualPet("Pirate", "Bird", 100, 10,10,100);
         myShelter.addPet(petA);
         myShelter.addPet(petB);
         myShelter.addPet(petC);
-        // end testing
-
-        /*
-        prompt for action
-            perform action
-
-        */
-
-
+        //
 
         System.out.println("------------------------------------------");
         System.out.println("////   Welcome to the pet shelter!    ////");

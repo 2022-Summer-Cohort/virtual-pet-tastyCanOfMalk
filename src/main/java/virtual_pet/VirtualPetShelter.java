@@ -83,8 +83,6 @@ public class VirtualPetShelter {
 //                if( pet.getName().length() > maxNameLength) { maxNameLength = pet.getName().length(); }
             }
 
-            System.out.println(maxNameLength); //test
-
             // create top legend (8 char spaces total)
             String topLegend = "";
             for(int i = 0; i < maxNameLength; i++){
