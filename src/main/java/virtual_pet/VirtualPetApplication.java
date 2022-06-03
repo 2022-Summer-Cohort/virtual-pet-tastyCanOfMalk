@@ -33,7 +33,7 @@ public class VirtualPetApplication {
         int petShelterLoopInput = 0;
         shelterLoop: while(petShelterLoopInput != 8){
             myShelter.getStatus();
-            this.shelterMenu();
+            shelterMenu();
             petShelterLoopInput = processInput(myShelter);
 
             switch(petShelterLoopInput){
