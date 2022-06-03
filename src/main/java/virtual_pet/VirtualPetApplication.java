@@ -14,7 +14,6 @@ public class VirtualPetApplication {
     public void gameLoop() throws InterruptedException {
         VirtualPetShelter myShelter = new VirtualPetShelter();
         Scanner reader = new Scanner(System.in);
-        Random rand = new Random();
         String petToAdopt, petSelected;
 
         // Add starting pets
