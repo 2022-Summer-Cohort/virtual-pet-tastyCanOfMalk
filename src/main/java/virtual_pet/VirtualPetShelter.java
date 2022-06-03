@@ -92,6 +92,9 @@ public class VirtualPetShelter {
     public void playPet(VirtualPet pet) throws InterruptedException { pet.playPet(); }
 
     public void printStatus(){
+        if(pets.size() == 0){
+            System.out.println("No pets in the shelter! ");
+        }
         for(VirtualPet pet : pets){
             pet.printPetStatus();
         }
@@ -110,5 +113,7 @@ public class VirtualPetShelter {
             pet.tick();
         }
     }
+
+
 
 }

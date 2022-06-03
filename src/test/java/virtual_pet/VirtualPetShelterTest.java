@@ -29,6 +29,4 @@ public class VirtualPetShelterTest {
         assertTrue(underTest.getAge() == petShelter.getAge(underTest));
     }
 
-
-
 }
