@@ -1,5 +1,4 @@
 package virtual_pet;
-
 import java.util.ArrayList;
 
 public class VirtualPetShelter {
@@ -117,6 +116,13 @@ public class VirtualPetShelter {
             System.out.println(" ------------ ");
         }
     }
+    public void getStatus(String pet){
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.printPetStatus();
+            }
+        }
+    }
     public void getHungerLevel(){
         if(this.pets.size() > 0 ) {
             System.out.println("Hunger ");
@@ -162,9 +168,27 @@ public class VirtualPetShelter {
             pet.playPet();
         }
     }
-    public void feedPet(VirtualPet pet) throws InterruptedException { pet.feedPet(); }
-    public void waterPet(VirtualPet pet) throws InterruptedException { pet.waterPet(); }
-    public void playPet(VirtualPet pet) throws InterruptedException { pet.playPet(); }
+    public void feedPet(String pet) throws InterruptedException {
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.feedPet();
+            }
+        }
+    }
+    public void waterPet(String pet) throws InterruptedException {
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.waterPet();
+            }
+        }
+    }
+    public void playPet(String pet) throws InterruptedException {
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.playPet();
+            }
+        }
+    }
 
     // TICKS
     public void tick(){
@@ -175,6 +199,13 @@ public class VirtualPetShelter {
     public void tick(int n){
         for(VirtualPet pet : pets){
             pet.tick(n);
+        }
+    }
+    public void tick(String pet){
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.tick();
+            }
         }
     }
 
