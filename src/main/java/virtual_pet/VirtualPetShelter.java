@@ -60,6 +60,12 @@ public class VirtualPetShelter {
         }
         return toReturn;
     }
+    public boolean getAlive(String pet){
+        for(VirtualPet p : pets){
+            if(p.equals(pet)){return p.getAlive(); }
+        }
+        return false;
+    }
 
     // GET PET STATS
     public void getStatus(VirtualPet pet){ pet.printPetStatus(); }
@@ -79,7 +85,6 @@ public class VirtualPetShelter {
             for(VirtualPet pet : pets){
                 String placeHolder = pet.getName() + " the " + pet.getAge() + " year-old " + pet.getType();
                 if(placeHolder.length() > maxNameLength){ maxNameLength = placeHolder.length() ;}
-//                if( pet.getName().length() > maxNameLength) { maxNameLength = pet.getName().length(); }
             }
 
             // create top legend (8 char spaces total)
@@ -205,6 +210,13 @@ public class VirtualPetShelter {
         for(VirtualPet p : pets){
             if(p.getName().equals(pet)){
                 p.tick();
+            }
+        }
+    }
+    public void tick(String pet, int n){
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.tick(n);
             }
         }
     }

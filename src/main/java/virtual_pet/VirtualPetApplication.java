@@ -102,18 +102,25 @@ public class VirtualPetApplication {
                             switch (Integer.parseInt(userInput)) {
                                 case 1:
                                     myShelter.feedPet(petSelected);
+                                    myShelter.tick(petSelected);
                                     break;
                                 case 2:
                                     myShelter.waterPet(petSelected);
+                                    myShelter.tick(petSelected);
                                     break;
                                 case 3:
                                     myShelter.playPet(petSelected);
-                                    break;
-                                case 4:
                                     myShelter.tick(petSelected);
                                     break;
+                                case 4:
+                                    myShelter.tick(petSelected, 5);
+                                    break;
                                 case 5:
-                                    System.out.println(petSelected + " says bye!");
+                                    if(myShelter.getAlive(petSelected)){
+                                        System.out.println(petSelected + " says bye!");
+                                    } else {
+                                        System.out.println("You walk away :(");
+                                    }
                                     TimeUnit.SECONDS.sleep(1);
                                     break;
                                 default:
