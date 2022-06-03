@@ -117,6 +117,13 @@ public class VirtualPetShelter {
             System.out.println(" ------------ ");
         }
     }
+    public void getStatus(String pet){
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.printPetStatus();
+            }
+        }
+    }
     public void getHungerLevel(){
         if(this.pets.size() > 0 ) {
             System.out.println("Hunger ");
@@ -162,7 +169,13 @@ public class VirtualPetShelter {
             pet.playPet();
         }
     }
-    public void feedPet(VirtualPet pet) throws InterruptedException { pet.feedPet(); }
+    public void feedPet(String pet) throws InterruptedException {
+        for(VirtualPet p : pets){
+            if(p.getName().equals(pet)){
+                p.feedPet();
+            }
+        }
+    }
     public void waterPet(VirtualPet pet) throws InterruptedException { pet.waterPet(); }
     public void playPet(VirtualPet pet) throws InterruptedException { pet.playPet(); }
 
