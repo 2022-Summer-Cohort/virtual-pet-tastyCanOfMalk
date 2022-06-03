@@ -15,11 +15,11 @@ public class VirtualPetApplication {
         VirtualPetShelter myShelter = new VirtualPetShelter();
         Scanner reader = new Scanner(System.in);
         Random rand = new Random();
-        String userSelection, petToAdopt, petSelected;
+        String petToAdopt, petSelected;
 
         // Add starting pets
         VirtualPet petA = new VirtualPet("Carrot", "Cat", 10, 0,0,10);
-        VirtualPet petB = new VirtualPet("Squirtle", "Dog", 1, 100,10,10);
+        VirtualPet petB = new VirtualPet("Squirtle", "Turtle", 1, 100,10,10);
         VirtualPet petC = new VirtualPet("Pirate", "Bird", 100, 10,10,100);
         myShelter.addPet(petA);
         myShelter.addPet(petB);
@@ -30,25 +30,14 @@ public class VirtualPetApplication {
         System.out.println("////   Welcome to the pet shelter!    ////");
         System.out.println("------------------------------------------");
 
-        shelterLoop: while(true){
+        int petShelterLoopInput = 0;
+        shelterLoop: while(petShelterLoopInput != 8){
 
             myShelter.getStatus();
             this.shelterMenu();
+            petShelterLoopInput = processInput(myShelter);
 
-            // Prompt until get a number
-            while(true){
-                userSelection = reader.nextLine();
-                try{
-                    Integer.parseInt(userSelection);
-                    break;
-                } catch (NumberFormatException e) {
-                    System.out.println("Not a number!");
-                    TimeUnit.SECONDS.sleep(1);
-                    this.shelterMenu();
-                }
-            }
-
-            switch(Integer.parseInt(userSelection)){
+            switch(petShelterLoopInput){
                 case 1:
                     myShelter.feedPet();
                     myShelter.tick();
@@ -78,28 +67,14 @@ public class VirtualPetApplication {
                     System.out.println("Who do you want to select? ");
                     System.out.println(myShelter.getName());
                     petSelected = reader.nextLine();
-
                     if(myShelter.getName().contains(petSelected)){
 
-                        String userInput = "";
-                        petLoop: while (!userInput.equals("5")) {
+                        int petLoopInput = 0;
+                        petLoop: while (petLoopInput != 5) {
                             myShelter.getStatus(petSelected);
                             userMenu();
-                            // check if input is int
-                            while (true) {
-                                userInput = reader.nextLine();
-                                try {
-                                    Integer.parseInt(userInput);
-                                    break;
-                                } catch (NumberFormatException e) {
-                                    System.out.println("Not a number!");
-                                    TimeUnit.SECONDS.sleep(1);
-                                    userMenu();
-                                }
-                            }
-
-                            // process user input
-                            switch (Integer.parseInt(userInput)) {
+                            petLoopInput = processInput(myShelter);
+                            switch (petLoopInput) {
                                 case 1:
                                     myShelter.feedPet(petSelected);
                                     myShelter.tick(petSelected);
@@ -116,7 +91,7 @@ public class VirtualPetApplication {
                                     myShelter.tick(petSelected, 5);
                                     break;
                                 case 5:
-                                    if(myShelter.getAlive(petSelected)){
+                                    if(!myShelter.getAlive(petSelected)){
                                         System.out.println(petSelected + " says bye!");
                                     } else {
                                         System.out.println("You walk away :(");
@@ -133,7 +108,7 @@ public class VirtualPetApplication {
                     break;
                 case 8:
                     System.out.println("Bye!");
-                    break shelterLoop;
+                    break;
                 default:
                     System.out.println("Invalid selection!");
                     break;
@@ -162,11 +137,25 @@ public class VirtualPetApplication {
         System.out.println("5. Quit pet");
     }
 
-    public void processInput(){
-
+    public int processInput(VirtualPetShelter myShelter) throws InterruptedException {
+        Scanner reader = new Scanner(System.in);
+        String userSelection;
+        while(true){
+            userSelection = reader.nextLine();
+            try{
+                Integer.parseInt(userSelection);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Not a number!");
+                TimeUnit.SECONDS.sleep(1);
+                myShelter.getStatus();
+                this.shelterMenu();
+            }
+        }
+        return Integer.parseInt(userSelection);
     }
 
-    public VirtualPet createPet(){
+    public VirtualPet createPet() throws InterruptedException {
         Scanner reader = new Scanner(System.in);
         Random rand = new Random();
         int randomHunger, randomThirst, randomBoredom;
