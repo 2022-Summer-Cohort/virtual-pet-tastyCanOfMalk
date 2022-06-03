@@ -14,9 +14,9 @@ public class VirtualPet {
 
     // https://cutekaomoji.com
     ArrayList<String> petFacesNeutral = new ArrayList<>(Arrays.asList("-_-", "(-_-)", "(￣__￣)", "(¯_¯)", "(´･_･`)", "(・_・ヾ"));
-    ArrayList<String> petFacesTired = new ArrayList<>(Arrays.asList("(¯﹃¯)", " ( v¯﹃¯v  )", " (¯﹃¯  )"));
-    ArrayList<String> petFacesNeedy = new ArrayList<>(Arrays.asList("(-‸-)", "(⇀‸↼‶)", " (‾̀ _ ‾̀ )", "╥_╥", "ㄒ_ㄒ", " ┰_┰" ));
-    ArrayList<String> petFacesHappy = new ArrayList<>(Arrays.asList("(o ╹‿ ╹ o)", "(o ╹ ᴗ ╹ o)", "(o ╹ᵕ ╹ o)", "(。╹‿ ╹ 。)", "(。╹ ᴗ ╹。)", "(o l ‿ l o)", "ヽ(•‿•)ノ"));
+    ArrayList<String> petFacesTired   = new ArrayList<>(Arrays.asList("(¯﹃¯)", " ( v¯﹃¯v  )", " (¯﹃¯  )"));
+    ArrayList<String> petFacesNeedy   = new ArrayList<>(Arrays.asList("(-‸-)", "(⇀‸↼‶)", " (‾̀ _ ‾̀ )", "╥_╥", "ㄒ_ㄒ", " ┰_┰" ));
+    ArrayList<String> petFacesHappy   = new ArrayList<>(Arrays.asList("(o ╹‿ ╹ o)", "(o ╹ ᴗ ╹ o)", "(o ╹ᵕ ╹ o)", "(。╹‿ ╹ 。)", "(。╹ ᴗ ╹。)", "(o l ‿ l o)", "ヽ(•‿•)ノ"));
 
     public VirtualPet(String name, String type, int age, int hungerLevel, int thirstLevel, int boredomLevel) {
         this.name = name;
@@ -124,6 +124,7 @@ public class VirtualPet {
         }
     }
     public void checkNeeds(){
+        checkLevels();
         if(isAlive && !wantsToEscape){
             if( (!isHungry && !isThirsty && !isBored) && (thirstLevel >= 90 || hungerLevel >= 90 || boredomLevel >= 90) ){
                 System.out.println(" -- << " + this.name + " needs attention! > -- ");
