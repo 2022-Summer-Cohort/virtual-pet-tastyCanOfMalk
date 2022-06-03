@@ -15,14 +15,14 @@ public class VirtualPetShelterTest {
         assertTrue(underTest.getType() == petShelter.getType(underTest));
     }
     @Test
-    public void getTypeShouldReturnNameOfPet() {
+    public void getNameShouldReturnNameOfPet() {
         VirtualPet underTest = new VirtualPet("test", "test", 50, 50, 50, 50);
         VirtualPetShelter petShelter = new VirtualPetShelter();
         petShelter.addPet(underTest);
         assertTrue(underTest.getName() == petShelter.getName(underTest));
     }
     @Test
-    public void getTypeShouldReturnAgeOfPet() {
+    public void getAgeShouldReturnAgeOfPet() {
         VirtualPet underTest = new VirtualPet("test", "test", 50, 50, 50, 50);
         VirtualPetShelter petShelter = new VirtualPetShelter();
         petShelter.addPet(underTest);
