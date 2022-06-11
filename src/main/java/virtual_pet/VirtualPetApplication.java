@@ -1,138 +1,173 @@
 package virtual_pet;
 
-import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 public class VirtualPetApplication {
-
     public static void main(String[] args) throws InterruptedException {
         VirtualPetApplication myGame = new VirtualPetApplication();
         myGame.gameLoop();
     }
 
     public void gameLoop() throws InterruptedException {
-        VirtualPetShelter myShelter = new VirtualPetShelter();
         Scanner reader = new Scanner(System.in);
-        String petToAdopt, petSelected;
 
-        // Add starting pets
-        VirtualPet petA = new VirtualPet("Carrot", "Cat", 10, 0,0,10);
-        VirtualPet petB = new VirtualPet("Squirtle", "Turtle", 1, 100,10,10);
-        VirtualPet petC = new VirtualPet("Pirate", "Bird", 100, 10,10,100);
+        // INITIALIZE STARTING SHELTER
+        VirtualPetShelter myShelter = new VirtualPetShelter();
+        OrganicCat petA = new OrganicCat("Squirt", 5);
+        OrganicDog petB = new OrganicDog("Bert", 3);
+        RoboticCat petC = new RoboticCat("AlphaCat", 302);
+        RoboticDog petD = new RoboticDog("BetaDog", 35);
         myShelter.addPet(petA);
         myShelter.addPet(petB);
         myShelter.addPet(petC);
-        //
+        myShelter.addPet(petD);
+        // end
 
-        System.out.println("------------------------------------------");
-        System.out.println("////   Welcome to the pet shelter!    ////");
-        System.out.println("------------------------------------------");
-
-        int petShelterLoopInput = 0;
-        shelterLoop: while(petShelterLoopInput != 8){
+        int shelterLoopInput = 10;
+        while(shelterLoopInput != 12){
             myShelter.getStatus();
             shelterMenu();
-            petShelterLoopInput = processInput(myShelter);
+            shelterLoopInput = processInput(myShelter);
 
-            switch(petShelterLoopInput){
-                case 1:
-                    myShelter.feedPet();
-                    myShelter.tick();
-                    break;
-                case 2:
-                    myShelter.waterPet();
-                    myShelter.tick();
-                    break;
-                case 3:
-                    myShelter.playPet();
-                    myShelter.tick();
-                    break;
-                case 4:
+            switch(shelterLoopInput){
+                case 1: myShelter.feedPet();        myShelter.tick(10); break;
+                case 2: myShelter.waterPet();       myShelter.tick(10); break;
+                case 3: myShelter.cleanEnclosure(); myShelter.tick(5); break;
+                case 4: myShelter.maintainPet();    myShelter.tick(10); break;
+                case 5: myShelter.oilPet();         myShelter.tick(10); break;
+                case 6: myShelter.walkPet();        myShelter.tick(10); break;
+                case 7: myShelter.playPet();        myShelter.tick(5); break;
+                case 8:
                     System.out.println("Who do you want to adopt? ");
-                    System.out.println(myShelter.getName());
-                    petToAdopt = reader.nextLine();
-                    myShelter.adoptPet(petToAdopt);
+                    System.out.println(myShelter.printNames());
+                    System.out.print("Input: ");
+                    String petToAdopt = reader.nextLine();
+                    myShelter.removePet(petToAdopt);
                     break;
-                case 5:
-                    VirtualPet newPet = this.createPet();
-                    myShelter.addPet(newPet);
+                case 9:
+                    myShelter.addPet(createPet());
+                    System.out.println("Thanks for dropping them off...");
+                    TimeUnit.SECONDS.sleep(1);
                     break;
-                case 6:
-                    myShelter.tick(5);
-                    break;
-                case 7:
-                    System.out.println("Who do you want to select? ");
-                    System.out.println(myShelter.getName());
-                    petSelected = reader.nextLine();
-                    if(myShelter.getName().contains(petSelected)){
+                case 10: myShelter.tick(100); break;
+                case 11:
+                    System.out.print("Who do you want to select? ");
+                    System.out.println(myShelter.printNames());
+                    String petSelected = reader.nextLine();
+
+                    if(myShelter.getNamesArray().contains(petSelected.toLowerCase())) {
+                        System.out.println(petSelected + "... Okay!"); TimeUnit.SECONDS.sleep(1);
 
                         int petLoopInput = 0;
-                        petLoop: while (petLoopInput != 5) {
+                        while(petLoopInput != 8){
                             myShelter.getStatus(petSelected);
-                            userMenu();
+                            petMenu();
                             petLoopInput = processInput(myShelter);
-                            switch (petLoopInput) {
-                                case 1:
-                                    myShelter.feedPet(petSelected);
-                                    myShelter.tick(petSelected);
-                                    break;
-                                case 2:
-                                    myShelter.waterPet(petSelected);
-                                    myShelter.tick(petSelected);
-                                    break;
-                                case 3:
-                                    myShelter.playPet(petSelected);
-                                    myShelter.tick(petSelected);
-                                    break;
-                                case 4:
-                                    myShelter.tick(petSelected, 5);
-                                    break;
-                                case 5:
-                                    if(!myShelter.getAlive(petSelected)){
-                                        System.out.println(petSelected + " says bye!");
-                                    } else {
-                                        System.out.println("You walk away :(");
-                                    }
-                                    TimeUnit.SECONDS.sleep(1);
-                                    break;
-                                default:
-                                    System.out.println("Invalid selection!");
+
+                            switch(petLoopInput){
+                                case 1: myShelter.feedPet(petSelected);         myShelter.tick(petSelected, 15); break;
+                                case 2: myShelter.waterPet(petSelected);        myShelter.tick(petSelected, 15); break;
+                                case 3: myShelter.cleanEnclosure(petSelected);  myShelter.tick(petSelected, 5); break;
+                                case 4: myShelter.maintainPet(petSelected);     myShelter.tick(petSelected, 10); break;
+                                case 5: myShelter.oilPet(petSelected);          myShelter.tick(petSelected, 10); break;
+                                case 6: myShelter.walkPet(petSelected);         myShelter.tick(petSelected, 15); break;
+                                case 7: myShelter.playPet(petSelected);         myShelter.tick(petSelected, 15); break;
+                                case 8: myShelter.makeNoise(petSelected);       break;
+                                default: System.out.println("Invalid.. "); TimeUnit.SECONDS.sleep(1); break;
                             }
                         }
+                        TimeUnit.SECONDS.sleep(1);
                     } else {
-                        System.out.println("invalid");
+                        System.out.println("That pet doesn't exist..."); TimeUnit.SECONDS.sleep(1);
                     }
                     break;
-                case 8:
-                    System.out.println("Bye!");
-                    break;
-                default:
-                    System.out.println("Invalid selection!");
-                    break;
+                case 12: System.out.println("Bye!"); TimeUnit.SECONDS.sleep(1); break;
+                default: System.out.println("Invalid..."); TimeUnit.SECONDS.sleep(1); break;
             }
+        }
+    }
+    public void shelterMenu() {
+        System.out.println(".................................");
+        System.out.println(".. Select an action ..............................................................");
+        System.out.println("| <<Organic pets>>     | <<Robotic pets>> | <<All pets>> |     8. Adopt a pet     ");
+        System.out.println("|   1. Feed            |   4. Maintain    |   7. Play    |     9. Admit a pet     ");
+        System.out.println("|   2. Water           |   5. Oil         |              |    10. Do nothing      ");
+        System.out.println("|   3. Clean enclosure | <<Dogs>>                             11. Select one pet  ");
+        System.out.println("                           6. Walk                            12. Quit            ");
+        System.out.print("Input: ");
+    }
+    public void petMenu() {
+        System.out.println(".................................");
+        System.out.println(".. Select an action ..............................................................");
+        System.out.println("1. Feed pet           5. Oil pet");
+        System.out.println("2. Water pet          6. Walk pet");
+        System.out.println("3. Clean enclosure    7. Play with pet");
+        System.out.println("4. Maintain pet       8. Back to shelter..");
+//        System.out.println("5. Oil pet");
+//        System.out.println("6. Walk pet");
+//        System.out.println("7. Play with pet");
+//        System.out.println("8. Back to shelter..");
+    }
 
+    public VirtualPet createPet() throws InterruptedException {
+        Scanner reader = new Scanner(System.in);
+        boolean robot, dog;
+        String name;
+        int age;
+        String robotSelection = null;
+        String dogSelection = null;
+
+        System.out.print("What is the pets name? ");
+        name = reader.nextLine();
+        System.out.print("How old is it? ");
+        age = Integer.parseInt(reader.nextLine());
+        System.out.print("Is it a robot? (Y/N): ") ;
+        robotSelection = reader.nextLine().toLowerCase();
+        while(true) {
+            if (!robotSelection.equals("y") && !robotSelection.equals("n")) {
+                System.out.println("Invalid response...");
+                TimeUnit.SECONDS.sleep(1);
+                System.out.print("Is it a robot? (Y/N): ");
+                robotSelection = reader.nextLine().toLowerCase();
+            } else if (robotSelection.equals("y")) {
+                robot = true;
+                break;
+            } else if (robotSelection.equals("n")) {
+                robot = false;
+                break;
+            }
+        }
+        System.out.print("Is it a dog? (Y/N): ") ;
+        dogSelection = reader.nextLine().toLowerCase();
+        while(true) {
+            if (!dogSelection.equals("y") && !dogSelection.equals("n")) {
+                System.out.println("Invalid response...");
+                TimeUnit.SECONDS.sleep(1);
+                System.out.print("Is it a dog? (Y/N): ");
+                dogSelection = reader.nextLine().toLowerCase();
+            } else if (dogSelection.equals("y")) {
+                dog = true;
+                break;
+            } else if (dogSelection.equals("n")) {
+                dog = false;
+                break;
+            }
         }
 
-    }
-
-    public void shelterMenu() {
-        System.out.println("1. Feed pets");
-        System.out.println("2. Water pets");
-        System.out.println("3. Play with pets");
-        System.out.println("4. Adopt a pet");
-        System.out.println("5. Admit a pet");
-        System.out.println("6. Do nothing");
-        System.out.println("7. Select one pet");
-        System.out.println("8. Quit game");
-    }
-
-    public void userMenu() {
-        System.out.println("1. Feed pet");
-        System.out.println("2. Water pet");
-        System.out.println("3. Play with pet");
-        System.out.println("4. Do nothing");
-        System.out.println("5. Quit pet");
+        if(robot && dog){
+            RoboticDog newPet = new RoboticDog(name, age);
+            return newPet;
+        } else if(!robot && dog){
+            OrganicDog newPet = new OrganicDog(name, age);
+            return newPet;
+        } else if(!robot && !dog){
+            OrganicCat newPet = new OrganicCat(name, age);
+            return newPet;
+        } else {
+            RoboticCat newPet = new RoboticCat(name, age);
+            return newPet;
+        }
     }
 
     public int processInput(VirtualPetShelter myShelter) throws InterruptedException {
@@ -147,38 +182,9 @@ public class VirtualPetApplication {
                 System.out.println("Not a number!");
                 TimeUnit.SECONDS.sleep(1);
                 myShelter.getStatus();
-                this.shelterMenu();
+                shelterMenu();
             }
         }
         return Integer.parseInt(userSelection);
     }
-
-    public VirtualPet createPet() throws InterruptedException {
-        Scanner reader = new Scanner(System.in);
-        Random rand = new Random();
-        int randomHunger, randomThirst, randomBoredom;
-        String petName, petType, petAge;
-
-        System.out.println("Name your pet!");
-        petName = reader.nextLine();
-        System.out.println("What type of animal is it?");
-        petType = reader.nextLine();
-        while (true) {
-            System.out.println("How old is it?");
-            petAge = reader.nextLine();
-            try {
-                Integer.parseInt(petAge);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Not a number!");
-            }
-        }
-
-        randomHunger = rand.nextInt(20);
-        randomThirst = rand.nextInt(20);
-        randomBoredom = rand.nextInt(50);
-        VirtualPet newPet = new VirtualPet(petName, petType, Integer.parseInt(petAge), randomHunger, randomThirst, randomBoredom);
-        return newPet;
-    }
-
 }

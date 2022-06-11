@@ -1,34 +1,41 @@
 package virtual_pet;
+
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class VirtualPetShelterTest {
 
     @Test
-    public void getTypeShouldReturnTypeOfPet() {
-        VirtualPet underTest = new VirtualPet("test", "test", 50, 50, 50, 50);
-        VirtualPetShelter petShelter = new VirtualPetShelter();
-        petShelter.addPet(underTest);
-        assertTrue(underTest.getType() == petShelter.getType(underTest));
-    }
-    @Test
-    public void getNameShouldReturnNameOfPet() {
-        VirtualPet underTest = new VirtualPet("test", "test", 50, 50, 50, 50);
-        VirtualPetShelter petShelter = new VirtualPetShelter();
-        petShelter.addPet(underTest);
-        assertTrue(underTest.getName() == petShelter.getName(underTest));
-    }
-    @Test
-    public void getAgeShouldReturnAgeOfPet() {
-        VirtualPet underTest = new VirtualPet("test", "test", 50, 50, 50, 50);
-        VirtualPetShelter petShelter = new VirtualPetShelter();
-        petShelter.addPet(underTest);
-        assertTrue(underTest.getAge() == petShelter.getAge(underTest));
+    public void addPetShouldAddPet() throws InterruptedException {
+        VirtualPet testPet = new OrganicDog("test", 12);
+        VirtualPetShelter testShelter = new VirtualPetShelter();
+        testShelter.addPet(testPet);
+        assertEquals(1, testShelter.getNamesArray().size());
     }
 
+    @Test
+    public void removePetShouldRemovePet() throws InterruptedException {
+        VirtualPetShelter testShelter = new VirtualPetShelter();
+        VirtualPet testPet = new OrganicDog("test", 12);
+        VirtualPet testPet2 = new OrganicDog("test2", 12);
+        testShelter.addPet(testPet);
+        testShelter.addPet(testPet2);
+        testShelter.removePet("test2");
+        assertEquals(1, testShelter.getNamesArray().size());
+    }
+
+    @Test
+    public void playShouldDecreaseBoredom() throws InterruptedException {
+        VirtualPetShelter testShelter = new VirtualPetShelter();
+        VirtualPet testPet = new OrganicDog("test", 12);
+        testShelter.addPet(testPet);
+        int initial = Integer.parseInt(testPet.getBoredomLevel());
+        testShelter.playPet();
+        int after = Integer.parseInt(testPet.getBoredomLevel());
+        assertTrue(initial > after);
+    }
 
 
 
